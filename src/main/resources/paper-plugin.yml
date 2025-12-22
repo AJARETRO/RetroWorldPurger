@@ -1,0 +1,15 @@
+name: FoliaCore-Cleaner
+version: '1.0-SNAPSHOT'
+main: dev.ajaretro.foliaCoreCleaner.FoliaCoreCleaner
+api-version: '1.21'
+prefix: "FoliaCore-Cleaner"
+authors: [AJA RETRO]
+description: "Smart chunk cleaner for Anarchy servers."
+website: ajaretro.dev
+
+dependencies:
+  server:
+    FoliaCore:
+      load: BEFORE
+      required: false
+      join-classpath: true
