@@ -6,6 +6,7 @@ prefix: "FoliaCore-Cleaner"
 authors: [AJA RETRO]
 description: "Smart chunk cleaner for Anarchy servers."
 website: ajaretro.dev
+folia-supported: true
 
 dependencies:
   server:
