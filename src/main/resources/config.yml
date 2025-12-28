@@ -1,15 +1,8 @@
-# FoliaCore-Cleaner Configuration
-
-# Worlds where the cleaner will NEVER run (Case sensitive!)
-# Example: [ "lobby", "creative_world" ]
 blacklisted-worlds:
   - "lobby"
 
-# Radius around the world spawn (in blocks) that will NEVER be deleted.
-# Keeps your spawn chunks safe.
 spawn-protection-radius: 500
 
-# Statistics (Do not touch these)
 stats:
   total-chunks-deleted: 0
   total-bytes-saved: 0

@@ -25,37 +25,28 @@ public class ChunkCleanerListener implements Listener {
         Chunk chunk = event.getChunk();
         World world = chunk.getWorld();
 
-        // 1. BLACKLIST CHECK
-        // If this world is in the config, do NOT touch anything.
         if (plugin.getBlacklistedWorlds().contains(world.getName())) {
             return;
         }
 
-        // 2. SPAWN RADIUS CHECK
-        // If chunk is close to spawn, do NOT touch it.
         Location spawn = world.getSpawnLocation();
-        // Convert chunk coordinates to block coordinates (multiply by 16)
         double chunkX = chunk.getX() * 16;
         double chunkZ = chunk.getZ() * 16;
 
-        // Simple distance check (using 2D distance)
         double distance = Math.sqrt(Math.pow(chunkX - spawn.getX(), 2) + Math.pow(chunkZ - spawn.getZ(), 2));
 
         if (distance < plugin.getSpawnProtectionRadius()) {
-            return; // Safe zone!
+            return;
         }
 
-        // 3. MODIFIED TAG CHECK
         if (chunk.getPersistentDataContainer().has(MODIFIED_KEY, PersistentDataType.BYTE)) {
             return;
         }
 
-        // 4. INHABITED TIME CHECK (10 Seconds)
         if (chunk.getInhabitedTime() > 200) {
             return;
         }
 
-        // --- NUKE IT ---
         plugin.addDeletedChunkStats(4096);
         event.setSaveChunk(false);
     }
