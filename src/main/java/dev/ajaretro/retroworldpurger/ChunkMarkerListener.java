@@ -1,6 +1,7 @@
-package dev.ajaretro.foliaCoreCleaner;
+package dev.ajaretro.retroworldpurger;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
@@ -32,10 +33,30 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public class ChunkMarkerListener implements Listener {
 
     private final JavaPlugin plugin;
     private final NamespacedKey MODIFIED_KEY;
+
+    // Cache interactive materials for O(1) constant-time lookup
+    private static final Set<Material> INTERACTIVE_MATERIALS = EnumSet.noneOf(Material.class);
+
+    static {
+        for (Material material : Material.values()) {
+            String name = material.name();
+            if (name.contains("ANVIL") ||
+                    name.contains("TABLE") ||
+                    name.contains("DOOR") ||
+                    name.contains("PLATE") ||
+                    name.contains("BUTTON") ||
+                    name.contains("LEVER")) {
+                INTERACTIVE_MATERIALS.add(material);
+            }
+        }
+    }
 
     public ChunkMarkerListener(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -72,14 +93,8 @@ public class ChunkMarkerListener implements Listener {
         Block block = event.getClickedBlock();
         if (block == null) return;
 
-        // Toggles chests, containers, doors, anvils, crafting/enchant tables, pressure plates, buttons, levers, etc.
-        if (block.getState() instanceof Container ||
-                block.getType().name().contains("ANVIL") ||
-                block.getType().name().contains("TABLE") ||
-                block.getType().name().contains("DOOR") ||
-                block.getType().name().contains("PLATE") ||
-                block.getType().name().contains("BUTTON") ||
-                block.getType().name().contains("LEVER")) {
+        // Check if the block is a container or belongs to the cached interactive types
+        if (block.getState() instanceof Container || INTERACTIVE_MATERIALS.contains(block.getType())) {
             markChunk(block.getChunk());
         }
     }

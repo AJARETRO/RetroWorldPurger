@@ -1,4 +1,4 @@
-package dev.ajaretro.foliaCoreCleaner;
+package dev.ajaretro.retroworldpurger;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -12,10 +12,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ChunkCleanerListener implements Listener {
 
-    private final FoliaCoreCleaner plugin;
+    private final RetroWorldPurger plugin;
     private final NamespacedKey MODIFIED_KEY;
 
-    public ChunkCleanerListener(FoliaCoreCleaner plugin) {
+    public ChunkCleanerListener(RetroWorldPurger plugin) {
         this.plugin = plugin;
         this.MODIFIED_KEY = new NamespacedKey(plugin, "is_modified");
     }
@@ -30,12 +30,16 @@ public class ChunkCleanerListener implements Listener {
         }
 
         Location spawn = world.getSpawnLocation();
-        double chunkX = chunk.getX() * 16;
-        double chunkZ = chunk.getZ() * 16;
+        double chunkX = chunk.getX() * 16.0;
+        double chunkZ = chunk.getZ() * 16.0;
 
-        double distance = Math.sqrt(Math.pow(chunkX - spawn.getX(), 2) + Math.pow(chunkZ - spawn.getZ(), 2));
+        // Optimize distance check by comparing squared distances directly (saves Math.sqrt cpu cycles)
+        double dx = chunkX - spawn.getX();
+        double dz = chunkZ - spawn.getZ();
+        double distanceSquared = (dx * dx) + (dz * dz);
+        double spawnRadius = plugin.getSpawnProtectionRadius();
 
-        if (distance < plugin.getSpawnProtectionRadius()) {
+        if (distanceSquared < (spawnRadius * spawnRadius)) {
             return;
         }
 
@@ -43,10 +47,11 @@ public class ChunkCleanerListener implements Listener {
             return;
         }
 
-        if (chunk.getInhabitedTime() > 200) {
+        if (chunk.getInhabitedTime() > plugin.getMinInhabitedTimeTicks()) {
             return;
         }
 
+        // Flag the chunk save state to false so it is purged/discarded upon unload
         plugin.addDeletedChunkStats(4096);
         event.setSaveChunk(false);
     }

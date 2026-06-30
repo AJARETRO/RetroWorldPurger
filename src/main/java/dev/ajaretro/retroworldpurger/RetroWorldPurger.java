@@ -1,4 +1,4 @@
-package dev.ajaretro.foliaCoreCleaner;
+package dev.ajaretro.retroworldpurger;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 
-public final class FoliaCoreCleaner extends JavaPlugin {
+public final class RetroWorldPurger extends JavaPlugin {
 
     private boolean hasCore = false;
     private List<String> blacklistedWorlds;
     private int spawnProtectionRadius;
+    private int minInhabitedTimeTicks;
 
     private final AtomicLong totalChunksDeleted = new AtomicLong(0);
     private final AtomicLong totalBytesSaved = new AtomicLong(0);
@@ -27,17 +28,15 @@ public final class FoliaCoreCleaner extends JavaPlugin {
         try {
             Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
             isFolia = true;
-        } catch (ClassNotFoundException ignored) {
-            isFolia = false;
-        }
+        } catch (ClassNotFoundException ignored) {}
 
         if (getServer().getPluginManager().getPlugin("FoliaCore") != null) {
             this.hasCore = true;
-            getLogger().info("Connected to Foliacore");
+            getLogger().info("Connected to FoliaCore");
         } else {
             this.hasCore = false;
             if (isFolia) {
-                getLogger().log(Level.WARNING, "It is better to use FoliaCore-Cleaner with Foliacore");
+                getLogger().log(Level.INFO, "FoliaCore not detected. Running independently.");
             }
         }
 
@@ -49,7 +48,7 @@ public final class FoliaCoreCleaner extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChunkMarkerListener(this), this);
         getServer().getPluginManager().registerEvents(new ChunkCleanerListener(this), this);
 
-        getLogger().info("FoliaCore-Cleaner is running.");
+        getLogger().info("RetroWorldPurger is running.");
     }
 
     @Override
@@ -58,7 +57,7 @@ public final class FoliaCoreCleaner extends JavaPlugin {
 
         double mbSaved = sessionBytesSaved.get() / 1024.0 / 1024.0;
         getLogger().info("--------------------------------------------------");
-        getLogger().info(" FoliaCore-Cleaner Session Report");
+        getLogger().info(" RetroWorldPurger Session Report");
         getLogger().info(" Chunks Cleaned: " + sessionChunksDeleted.get());
         getLogger().info(" Storage Saved:  " + String.format("%.2f", mbSaved) + " MB");
         getLogger().info("--------------------------------------------------");
@@ -80,6 +79,7 @@ public final class FoliaCoreCleaner extends JavaPlugin {
 
         this.blacklistedWorlds = getConfig().getStringList("blacklisted-worlds");
         this.spawnProtectionRadius = getConfig().getInt("spawn-protection-radius", 500);
+        this.minInhabitedTimeTicks = getConfig().getInt("min-inhabited-time-ticks", 200);
     }
 
     private void saveStats() {
@@ -90,4 +90,5 @@ public final class FoliaCoreCleaner extends JavaPlugin {
 
     public List<String> getBlacklistedWorlds() { return blacklistedWorlds; }
     public int getSpawnProtectionRadius() { return spawnProtectionRadius; }
+    public int getMinInhabitedTimeTicks() { return minInhabitedTimeTicks; }
 }

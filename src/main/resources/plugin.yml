@@ -1,0 +1,10 @@
+name: RetroWorldPurger
+version: '1.0-SNAPSHOT'
+main: dev.ajaretro.retroworldpurger.RetroWorldPurger
+api-version: '1.21'
+prefix: "RetroWorldPurger"
+authors: [AJA RETRO]
+description: "Smart chunk purger and storage optimizer."
+website: ajaretro.dev
+folia-supported: true
+softdepend: [FoliaCore]

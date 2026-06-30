@@ -2,6 +2,7 @@ blacklisted-worlds:
   - "lobby"
 
 spawn-protection-radius: 500
+min-inhabited-time-ticks: 200
 
 stats:
   total-chunks-deleted: 0
