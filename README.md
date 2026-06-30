@@ -1,4 +1,8 @@
-# RetroWorldPurger
+# 🧹 RetroWorldPurger
+
+[![Modrinth Download](https://img.shields.io/badge/Modrinth-Download-00AD5C?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/retroworldpurger)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-222222?style=for-the-badge&logo=github)](https://github.com/AJARETRO/RetroWorldPurger)
+[![Hangar](https://img.shields.io/badge/Hangar-Release-005f73?style=for-the-badge&logo=papermc)](https://hangar.papermc.io/AJA_RETRO/RetroWorldPurger)
 
 **A lightweight, high-performance chunk purger and storage optimizer designed for Spigot, Paper, Folia, and all downstream forks.**
 
@@ -62,6 +66,6 @@ We use [bStats](https://bstats.org/plugin/bukkit/RetroWorldPurger/28479) (ID: 28
 ---
 
 ## ⚖️ License
-**Copyright © 2026 AJA_RETRO. All Rights Reserved.**
+**Copyright © 2026 AJA_RETRO (RetroWorldPurger). All Rights Reserved.**
 
-This software is proprietary. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the developer.
+Licensed under the **Source-Available License**. See [LICENSE.md](LICENSE.md) for full terms.
