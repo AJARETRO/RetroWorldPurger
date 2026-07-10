@@ -48,6 +48,16 @@ public final class RetroWorldPurger extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChunkMarkerListener(this), this);
         getServer().getPluginManager().registerEvents(new ChunkCleanerListener(this), this);
 
+        // Check for DeMalware-RETRO active agent
+        if (System.getProperty("demalware.agent.active") == null) {
+            getLogger().warning("==================================================");
+            getLogger().warning("WARNING: DeMalware-RETRO is not installed or early-boot protection is inactive!");
+            getLogger().warning("Please install it to protect your server from malicious plugins and backdoors.");
+            getLogger().warning("Modrinth: https://modrinth.com/mod/demalware-retro");
+            getLogger().warning("GitHub: https://github.com/AJARETRO/DeMalware-RETRO");
+            getLogger().warning("==================================================");
+        }
+
         getLogger().info("RetroWorldPurger is running.");
     }
 
