@@ -70,3 +70,12 @@ We use [bStats](https://bstats.org/plugin/bukkit/RetroWorldPurger/28479) (ID: 28
 **Copyright © 2026 AJA_RETRO (RetroWorldPurger). All Rights Reserved.**
 
 Licensed under the **Source-Available License**. See [LICENSE.md](LICENSE.md) for full terms.
+
+---
+
+## 📦 AJA RETRO Plugin Suite
+*   [DeMalware-RETRO](https://modrinth.com/mod/demalware-retro) - Advanced JVM agent early-boot malware protection scanner.
+*   [CircuitBreaker](https://modrinth.com/mod/circuitbreaker) - Dynamic lag machine culler and entity optimizer.
+*   [FoliaCore](https://modrinth.com/mod/folia-core) - Multi-threaded native essentials suite built for Folia.
+*   [RetroWorldPurger](https://modrinth.com/plugin/retroworldpurger) - Automatic region file purger and storage optimizer.
+*   [RetroMail](https://modrinth.com/plugin/retromail) - High-performance SMTP server integration for mail delivery.
